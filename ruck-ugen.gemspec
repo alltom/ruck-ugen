@@ -46,6 +46,7 @@ Gem::Specification.new do |s|
      "lib/ruck/ugen/time_helpers.rb",
      "lib/ruck/ugen/ugen.rb",
      "lib/ruck/ugen/wav.rb",
+     "ruck-ugen.gemspec",
      "test/bench.rb"
   ]
   s.homepage = %q{http://github.com/alltom/ruck-ugen}
