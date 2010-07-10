@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require "rubygems"
+
+# for testing inside gem dir
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+require "ruck"
+require "ruck/ugen"
+
+SAMPLE_RATE = 22050
+SHREDULER = Ruck::UGen::UGenShreduler.new
+BLACKHOLE = Ruck::UGen::InChannel.new
+
+filenames = ARGV
+filenames.each do |filename|
+  unless File.readable?(filename)
+    LOG.fatal "Cannot read file #{filename}"
+    exit
+  end
+end
+
+filenames.each do |filename|
+  SHREDULER.spork(filename) do
+    include Ruck::UGen::ShredLocal
+    include Ruck::UGen::Generators
+    require filename
+  end
+end
+SHREDULER.run
