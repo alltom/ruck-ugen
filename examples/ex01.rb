@@ -18,7 +18,7 @@ chan = 0
 10.times do
   play 0.7.seconds
   chan = (chan + 1) % 2
-  spork("beep") { beep(wav, chan) }
+  spork { beep(wav, chan) }
 end
 
 play 2.seconds

@@ -8,14 +8,13 @@ module Ruck
   module UGen
     
     class UGenShreduler < Ruck::Shreduler
-      def run
+      def fast_forward(dt)
         super
-      end
-
-      def sim_to(new_now)
-        while @now < new_now.to_i
-          BLACKHOLE.next @now
-          @now += 1
+        
+        @stream_now ||= 0
+        while @stream_now < now.to_i
+          BLACKHOLE.next @stream_now
+          @stream_now += 1
         end
       end
     end
@@ -30,18 +29,8 @@ module Ruck
         SHREDULER.now
       end
 
-      def spork(name = "unnamed", &shred)
-        SHREDULER.spork(name, &shred)
-      end
-
       def play(samples)
-        SHREDULER.current_shred.yield(samples)
-      end
-
-      def finish
-        shred = SHREDULER.current_shred
-        SHREDULER.remove_shred shred
-        shred.finish
+        Shred.yield(samples)
       end
     end
   

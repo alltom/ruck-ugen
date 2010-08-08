@@ -41,7 +41,6 @@ module Ruck
         end
 
         def save
-          LOG.info "Saving WAV to #{@filename}..."
           File.open(@filename, "wb") { |f| f.write encode }
         end
 
