@@ -19,16 +19,16 @@ def beat
 end
 
 4.times do
-  spork("beat 1") { beat }; spork("smash") { smash }
+  spork { beat }; spork { smash }
   play @one_beat
 
-  spork("beat 2") { beat }
+  spork { beat }
   play @one_beat
 
-  spork("beat 3") { beat }
+  spork { beat }
   play @one_beat
 
-  spork("beat 4") { beat }
+  spork { beat }
   play @one_beat
 end
 
